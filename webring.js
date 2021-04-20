@@ -4,9 +4,11 @@ const webring = (uri, onsucc, depth = 1) => {
   request.open('GET', `https://${uri}/webring++.json`, true);
   
   request.onload = () => {
-    const status = this.status;
+    const status = request.status;
     if (200 <= status < 400) {
-      const children = JSON.parse(this.response).links;
+      const response = request.response;
+      console.log(`Parsing JSON response ${response}`);
+      const children = JSON.parse(response).links;
       onsucc(uri, children, depth);
       if (depth > 0) {
         children.forEach((child) => { webring(child, onsucc, depth - 1); });
