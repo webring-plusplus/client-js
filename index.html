@@ -3,13 +3,45 @@
 <head>
 <title>webring demo</title>
 <meta charset="utf-8" />
+<style type="text/css">
+body {
+  max-width: 80em;
+  margin: 1em auto;
+}
+div {
+  margin-left: 1em;
+}
+</style>
 </head>
 
 <body>
-<p>(Check your browser console)</p>
-<script src="webring.js"></script>
+<div id="root"></div>
+<script src="webring.js" crossorigin="anonymous"></script>
 <script>
-webring("webring-plusplus.github.io/client-js", (uri, peers, depth) => console.log(uri, peers, depth));
+const to_id = (from) => {
+  return from.replaceAll(".", "").replaceAll("/", "");
+};
+
+const push = (where, what, prepend = "∟ ") => {
+  const new_el = document.createElement("div");
+  new_el.id = to_id(what);
+  new_el.textContent = `${prepend}${what}`;
+  document.querySelectorAll(`#${where}`)[0].append(new_el);
+};
+
+
+
+const root = "webring-plusplus.github.io/client-js";
+push("root", root, prepend="⬘ ");
+
+webring(
+  "webring-plusplus.github.io/client-js",
+  (uri, peers, depth) => {
+    peers.forEach((peer) => push(to_id(uri), peer));
+    console.log(uri, peers, depth);
+  },
+  depth=2
+);
 </script>
 </body>
 </html>
