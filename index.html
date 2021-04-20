@@ -1,0 +1,15 @@
+<!doctype html>
+<html>
+<head>
+<title>webring demo</title>
+<meta charset="utf-8" />
+</head>
+
+<body>
+<p>(Check your browser console)</p>
+<script src="webring.js"></script>
+<script>
+webring("webring-plusplus.github.io/client-js", (uri, peers, depth) => console.log(uri, peers, depth));
+</script>
+</body>
+</html>
